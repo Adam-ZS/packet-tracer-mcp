@@ -101,6 +101,8 @@ optional Linux desktop controls, see [configuration](docs/CONFIGURATION.md).
 
 You can run the same demo from a terminal with a blank Packet Tracer canvas.
 The command returns JSON, including both ping results and the saved path.
+To continue working in Packet Tracer, open the `.pkt` at that path. For a
+custom lab, start with the [tool guide](docs/AI_GUIDE.md).
 
 ```bash
 pt-evidence demo --output practice-lan.pkt
