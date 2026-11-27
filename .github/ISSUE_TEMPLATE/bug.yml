@@ -1,0 +1,31 @@
+name: Bug report
+description: A reproducible failure in setup, live control or evidence handling
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: Review logs and screenshots before sharing. Remove credentials, IDs and coursework.
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS/display type, Python, Packet Tracer and Control Center versions
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Redacted output
+      render: text
