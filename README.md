@@ -1,18 +1,19 @@
 <p align="center">
-  <img src="docs/assets/hero.svg" alt="Packet Tracer MCP" width="100%" />
+  <img src="docs/assets/hero.svg" alt="" width="100%" />
 </p>
 
 <h1 align="center">Packet Tracer MCP</h1>
 
 <p align="center">
   <a href="https://github.com/Adam-ZS/packet-tracer-mcp/actions/workflows/ci.yml"><img src="https://github.com/Adam-ZS/packet-tracer-mcp/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
-  <a href="https://github.com/Adam-ZS/packet-tracer-mcp/releases"><img src="https://img.shields.io/github/v/release/Adam-ZS/packet-tracer-mcp?include_prereleases&color=61a9ff" alt="GitHub release" /></a>
+  <a href="https://github.com/Adam-ZS/packet-tracer-mcp/releases/latest"><img src="https://img.shields.io/github/v/release/Adam-ZS/packet-tracer-mcp?color=61a9ff" alt="Latest release" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-49d9be" alt="MIT license" /></a>
   <a href="https://github.com/Adam-ZS/packet-tracer-mcp/stargazers"><img src="https://img.shields.io/github/stars/Adam-ZS/packet-tracer-mcp?style=flat&color=ffcd69" alt="GitHub stars" /></a>
 </p>
 
 <p align="center">
-  <a href="#quick-start">Install</a> ·
+  <a href="https://github.com/Adam-ZS/packet-tracer-mcp/releases/latest"><strong>Download latest release</strong></a> ·
+  <a href="#quick-start">Quick start</a> ·
   <a href="#build-your-first-lan">Try a LAN</a> ·
   <a href="docs/AI_GUIDE.md">AI tool guide</a> ·
   <a href="docs/HEADLESS.md">Headless Linux</a> ·
@@ -50,17 +51,19 @@ Tracer. Live operation was tested on Linux/X11.
    [upstream releases](https://github.com/Mats2208/MCP-Packet-Tracer/releases).
    In Packet Tracer, open **Extensions → Scripting → Configure PT Script Modules**,
    add the module, select it and click **Start** if prompted. Keep Packet Tracer running.
-2. Install the MCP server in a virtual environment.
+2. Install the MCP server from the release wheel in a virtual environment.
 
    ```bash
-   git clone https://github.com/Adam-ZS/packet-tracer-mcp.git
+   mkdir -p packet-tracer-mcp
    cd packet-tracer-mcp
    python3 -m venv .venv
    source .venv/bin/activate
-   python -m pip install -e .
+   python -m pip install 'https://github.com/Adam-ZS/packet-tracer-mcp/releases/download/v0.2.0/packettracer_evidence_mcp-0.2.0-py3-none-any.whl'
    export PT_WORKSPACE="$PWD/workspace"
    pt-evidence doctor --live
    ```
+
+   To develop from a clone, see the [source setup](CONTRIBUTING.md).
 
 3. Copy this into a client that supports the `mcpServers` JSON format and
    replace both paths with your own.
