@@ -74,8 +74,9 @@ Tracer. Live operation was tested on Linux/X11.
 
    To develop from a clone, see the [source setup](CONTRIBUTING.md).
 
-3. Copy this into a client that supports the `mcpServers` JSON format and
-   replace both paths with your own.
+3. Copy this into a client that supports the `mcpServers` JSON format.
+   Use the absolute path to the directory you created in step 2 for both
+   entries. This gives the terminal and MCP client the same workspace.
 
    ```json
    {
@@ -84,7 +85,7 @@ Tracer. Live operation was tested on Linux/X11.
          "command": "/absolute/path/packet-tracer-mcp/.venv/bin/pt-evidence",
          "args": ["serve"],
          "env": {
-           "PT_WORKSPACE": "/absolute/path/my-packet-tracer-work"
+           "PT_WORKSPACE": "/absolute/path/packet-tracer-mcp/workspace"
          }
        }
      }
