@@ -1,6 +1,19 @@
 # Validation record
 
-Initial release validation performed on 2026-11-27.
+## Four-device demo and headless Linux
+
+Version 0.2.0 was tested on Cisco Packet Tracer 9.0.1 with Control Center
+0.5.2 running on Xvfb. The MCP test client and server ran without `DISPLAY`,
+`WAYLAND_DISPLAY` or `XAUTHORITY`. The tool created four devices and three
+cables, configured the router and switch IOS and both host addresses, and
+received four replies with zero loss from both the router and the server.
+Packet Tracer saved the `.pkt` and reopened it with all four devices.
+The tool call took about 12 seconds after MCP startup. The separate terminal
+demo took about 13 seconds. Timing varies with the workstation and session.
+
+The current README PNGs are crops of the actual virtual display. Both crop
+manifests passed hash and pixel verification before the crops were copied
+into the repository.
 
 ## Offline checks
 
@@ -42,8 +55,7 @@ Through a real MCP stdio client session:
 8. Saved a real `.pkt`, saved changes again without an overwrite modal,
    reopened it, and checked the expected devices.
 
-The public PNGs are direct copies of those cropped captures. Originals,
-manifests, transcripts and the neutral demo project remain in the local
+Originals, manifests, transcripts and demo projects remain in the local
 workspace. Run the example to create your own artifacts.
 
 ## Limits

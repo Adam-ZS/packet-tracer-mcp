@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.0
+
+- Add `pt_build_practice_lan` for a cabled router, switch, PC and server. It tests
+  the PC's reachability to the router and server before saving.
+- Give MCP clients concrete runtime instructions for placing devices, choosing
+  exact ports, connecting cables, configuring IP and verifying a custom lab.
+- Add a lightweight `pt-evidence demo` CLI and a tested Xvfb setup for
+  running the simulator on Linux without a physical display.
+- Rename the GitHub repository to `packet-tracer-mcp`. The Python package and
+  `pt-evidence` command retain their existing names.
+
 ## 0.1.0
 
 - Typed live Packet Tracer controls for a focused set of routers, switches,

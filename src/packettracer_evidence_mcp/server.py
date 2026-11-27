@@ -22,18 +22,31 @@ READ = ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=F
 WRITE = ToolAnnotations(readOnlyHint=False, destructiveHint=False, openWorldHint=False)
 DESTRUCTIVE = ToolAnnotations(readOnlyHint=False, destructiveHint=True, openWorldHint=False)
 
-WORKFLOW = """Operate the user's running Packet Tracer application.
-1. Inspect the current project and actual model ports before making changes.
-2. Configure and test routing before testing authentication.
-3. Send interactive terminal input one line at a time with an expected final prompt.
-4. Inspect command errors. A matching prompt does not mean a command worked.
-5. Verify both accepted and rejected logins when the lab requires them.
-6. Focus the live app and review the visible screen before capturing evidence.
-7. Capture genuine desktop pixels, crop only, retain originals and verify the manifest.
-8. Fill explicit placeholders in a copy of the Word template. Keep its original structure.
-9. Save the real .pkt with Packet Tracer and reopen it to check persistence.
-Never manufacture terminal screenshots or claim unsupported IOS features succeeded.
-Do not include student IDs, credentials or unrelated desktop content in public examples.
+WORKFLOW = r"""Build and verify networks in the user's running Cisco Packet Tracer application.
+1. Call pt_status and pt_devices. If the extension is offline, resolve setup before editing.
+2. For a starter router, switch, PC and server LAN, use pt_build_practice_lan on a blank canvas.
+   It creates real devices and cables, sets addresses, tests both PC pings and saves on success.
+3. For a custom topology, place each device with pt_add_device(name, model, x, y).
+   Use models 2911, ISR4331, 2960-24TT, PC-PT and Server-PT as appropriate.
+   Call pt_devices again and copy full port names. A 2911 uses GigabitEthernet0/0.
+   An ISR4331 uses GigabitEthernet0/0/0. PCs and servers usually use FastEthernet0.
+4. Use pt_connect(a, a_port, b, b_port, cable="straight") to create an actual Ethernet link.
+   Use a different switch port for every link, for example FastEthernet0/1, 0/2 and 0/3.
+   Use pt_move_device and pt_add_note for layout and labels after creating the links.
+5. Set PC and Server-PT addressing with pt_pc_ip(device, address, mask, gateway).
+   Set router interfaces and routes with pt_configure_ios. Include no shutdown on used ports.
+   Configure switch VLANs and its management SVI with IOS when the lab calls for them.
+6. Use pt_terminal to run pings and IOS show commands. For PC pings use C:\\>\s*$.
+   On a fresh IOS console answer no to initial setup if prompted, then send a blank command
+   at Press RETURN to get started and use enable. Read the new output and actual prompt.
+   For login and RSA prompts send one answer per call. Recheck addressing, link state,
+   VLANs, routing and ARP when a ping fails. Verify results from output and ping statistics.
+7. Use pt_radius_setup for a simulated Server-PT AAA service. Match client IP, auth port
+   and shared secret to the router. Test authentication only after verifying connectivity.
+8. For evidence, focus the live window and capture its real pixels with pt_capture.
+   Verify the manifest and use pt_fill_report for explicit placeholders in a DOCX copy.
+9. Save the real .pkt under PT_WORKSPACE. Reopen only when authorized to replace the canvas.
+Keep IDs, credentials and unrelated desktop content out of public examples.
 """
 
 
@@ -43,9 +56,9 @@ async def invoke(function, *args, **kwargs):
 
 def create_server(client: PacketTracer) -> FastMCP:
     mcp = FastMCP(
-        "Packet Tracer Evidence",
+        "Packet Tracer MCP",
         instructions=WORKFLOW,
-        website_url="https://github.com/Adam-ZS/packettracer-evidence-mcp",
+        website_url="https://github.com/Adam-ZS/packet-tracer-mcp",
     )
 
     @mcp.tool(annotations=READ)
@@ -62,6 +75,16 @@ def create_server(client: PacketTracer) -> FastMCP:
     async def pt_new_project(confirm_discard: bool = False) -> dict[str, Any]:
         """Start a new project, explicitly discarding current unsaved work."""
         return await invoke(client.new, confirm_discard)
+
+    @mcp.tool(annotations=WRITE)
+    async def pt_build_practice_lan(output: str = "practice-lan.pkt") -> dict[str, Any]:
+        """Build a four-device LAN in a blank project, test both PC pings and save a .pkt.
+
+        Creates a 2911, 2960, PC-PT and Server-PT with three links and static addresses.
+        The output path must be new and relative to PT_WORKSPACE. Allow time for both pings.
+        On a failed ping the topology stays on the canvas for inspection.
+        """
+        return await invoke(client.build_practice_lan, output)
 
     @mcp.tool(annotations=WRITE)
     async def pt_project_info(
@@ -88,7 +111,11 @@ def create_server(client: PacketTracer) -> FastMCP:
         b_port: str,
         cable: Literal["straight", "crossover", "serial"] = "straight",
     ) -> dict[str, Any]:
-        """Connect two existing ports. Check actual port names using pt_devices first."""
+        """Create an actual cable between two named ports returned by pt_devices.
+
+        Use full interface names and an unused switch port per connection. Straight is the
+        usual choice for an Ethernet PC, server or routed router port connected to a switch.
+        """
         return await invoke(client.connect, a, a_port, b, b_port, cable)
 
     @mcp.tool(annotations=WRITE)

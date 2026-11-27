@@ -7,7 +7,7 @@ available. Do not publish exploit details, tokens, private captures or student
 data in a public issue. If private reporting is unavailable, open an issue
 asking for a private contact without including sensitive details.
 
-The initial `0.1.x` release is alpha software. There is no promised response
+The project is alpha software. There is no promised response
 time or long-term support schedule. Fixes will be documented in the changelog.
 
 ## Trust and boundaries

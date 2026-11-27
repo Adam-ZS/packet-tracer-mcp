@@ -19,6 +19,20 @@ def js(value: object) -> str:
     return json.dumps(value, ensure_ascii=True)
 
 
+def device_placement(name: str, model: str, x: int, y: int) -> str:
+    return f"lwAddDevice({js(name)},{MODELS[model]},{js(model)},{int(x)},{int(y)});"
+
+
+def cable_placement(a: str, a_port: str, b: str, b_port: str, cable: str) -> str:
+    return (
+        f"var a=ipc.network().getDevice({js(a)}),b=ipc.network().getDevice({js(b)});"
+        "if(!a||!b)throw new Error('Device not found');"
+        f"if(!a.getPort({js(a_port)})||!b.getPort({js(b_port)}))"
+        "throw new Error('Port not found; inspect the actual model ports first');"
+        f"lwAddLink({js(a)},{js(a_port)},{js(b)},{js(b_port)},{CABLES[cable]});"
+    )
+
+
 class PacketTracer:
     def __init__(self, bridge: FileBridge, workspace: Workspace):
         self.bridge = bridge
@@ -81,8 +95,8 @@ class PacketTracer:
             raise ValueError(f"Supported model choices: {', '.join(MODELS)}")
         return self._execute(
             f"if(ipc.network().getDevice({js(name)}))throw new Error('Device already exists');"
-            f"lwAddDevice({js(name)},{MODELS[model]},{js(model)},{int(x)},{int(y)});"
-            f"var d=ipc.network().getDevice({js(name)});"
+            + device_placement(name, model, x, y)
+            + f"var d=ipc.network().getDevice({js(name)});"
             "if(!d)throw new Error('Device was not created');"
             "return {name:d.getName(),model:d.getModel()};"
         )
@@ -91,12 +105,8 @@ class PacketTracer:
         if cable not in CABLES:
             raise ValueError("Cable must be straight, crossover or serial.")
         return self._execute(
-            f"var a=ipc.network().getDevice({js(a)}),b=ipc.network().getDevice({js(b)});"
-            "if(!a||!b)throw new Error('Device not found');"
-            f"if(!a.getPort({js(a_port)})||!b.getPort({js(b_port)}))"
-            "throw new Error('Port not found; inspect the actual model ports first');"
-            f"lwAddLink({js(a)},{js(a_port)},{js(b)},{js(b_port)},{CABLES[cable]});"
-            "return {requested:true,verified:false,note:'Check port status and connectivity.'};"
+            cable_placement(a, a_port, b, b_port, cable)
+            + "return {requested:true,verified:false,note:'Check port status and connectivity.'};"
         )
 
     def pc_ip(self, name: str, address: str, mask: str, gateway: str) -> dict:
@@ -109,6 +119,119 @@ class PacketTracer:
             f"{js(str(interface.netmask))},{js(str(gateway_ip))});return true;"
         )
         return {"device": name, "address": address, "mask": mask, "gateway": gateway}
+
+    def build_practice_lan(self, output: str) -> dict:
+        """Build and verify a fixed starter network on a blank logical canvas."""
+        with self.bridge.lock:
+            if self.workspace.path(output, suffix=".pkt").exists():
+                raise FileExistsError(f"Output already exists: {output}")
+            if any(device["model"] != "Power Distribution Device" for device in self.devices()):
+                raise ValueError(
+                    "Open a blank Packet Tracer project before building the practice LAN."
+                )
+
+            devices = [
+                ("R-DEMO", "2911", 280, 125),
+                ("SW-DEMO", "2960-24TT", 560, 215),
+                ("PC-DEMO", "PC-PT", 860, 145),
+                ("SERVER-DEMO", "Server-PT", 860, 340),
+            ]
+            links = [
+                ("R-DEMO", "GigabitEthernet0/0", "FastEthernet0/1"),
+                ("PC-DEMO", "FastEthernet0", "FastEthernet0/2"),
+                ("SERVER-DEMO", "FastEthernet0", "FastEthernet0/3"),
+            ]
+            # One mailbox round trip for the fixed topology. Ping checks validate the links later.
+            self._execute(
+                "".join(device_placement(*spec) for spec in devices)
+                + "".join(
+                    cable_placement(device, port, "SW-DEMO", switch_port, "straight")
+                    for device, port, switch_port in links
+                )
+                + "return true;"
+            )
+
+            for device, address in [("PC-DEMO", "192.0.2.2"), ("SERVER-DEMO", "192.0.2.3")]:
+                self.pc_ip(device, address, "255.255.255.0", "192.0.2.1")
+
+            router_config = "\n".join(
+                [
+                    "enable",
+                    "configure terminal",
+                    "hostname R-DEMO",
+                    "interface g0/0",
+                    "ip address 192.0.2.1 255.255.255.0",
+                    "no shutdown",
+                    "end",
+                    "write memory",
+                ]
+            )
+            result = self.configure_ios("R-DEMO", router_config)
+            if result["detected_errors"]:
+                raise RuntimeError(f"Router reported errors: {result['detected_errors']}")
+
+            # These three ports terminate at a routed interface or a host.
+            # PortFast avoids waiting for the initial STP timer on this fixed layout.
+            switch_config = "\n".join(
+                [
+                    "enable",
+                    "configure terminal",
+                    "hostname SW-DEMO",
+                    "interface range f0/1 - 3",
+                    "switchport mode access",
+                    "spanning-tree portfast",
+                    "end",
+                    "write memory",
+                ]
+            )
+            result = self.configure_ios("SW-DEMO", switch_config)
+            if result["detected_errors"]:
+                raise RuntimeError(f"Switch reported errors: {result['detected_errors']}")
+
+            notes = [
+                (420, 35, "Practice LAN | 192.0.2.0/24"),
+                (190, 170, "R-DEMO G0/0\n192.0.2.1/24"),
+                (470, 255, "SW-DEMO\nF0/1 router | F0/2 PC | F0/3 server"),
+                (900, 140, "PC-DEMO\n192.0.2.2/24"),
+                (900, 325, "SERVER-DEMO\n192.0.2.3/24"),
+            ]
+            self._execute(
+                "var w=ipc.appWindow().getActiveWorkspace().getLogicalWorkspace();"
+                + "".join(
+                    f"w.addNote({x},{y},w.getIncNoteZOrder(),{js(label)});" for x, y, label in notes
+                )
+                + "w.centerOn(570,220);return true;"
+            )
+
+            checks = []
+            for destination in ["192.0.2.1", "192.0.2.3"]:
+                for attempt in range(1, 6):
+                    ping = self.terminal("PC-DEMO", f"ping {destination}", r"C:\\>\s*$", timeout=12)
+                    # Parse completed ping statistics rather than accepting a prompt alone.
+                    passed = ping["matched"] and bool(
+                        re.search(r"Lost\s*=\s*0\s*\(0% loss\)", ping["new_output"])
+                    )
+                    if passed or ping["timed_out"]:
+                        break
+                    if attempt < 5:
+                        time.sleep(2)
+                checks.append(
+                    {
+                        "source": "PC-DEMO",
+                        "destination": destination,
+                        "passed": passed,
+                        "attempts": attempt,
+                        "output": ping["new_output"],
+                    }
+                )
+                if not passed:
+                    return {
+                        "verified": False,
+                        "saved": False,
+                        "checks": checks,
+                        "next_step": "Inspect the live LAN and the returned ping output.",
+                    }
+            return {"verified": True, "checks": checks, **self.save(output)}
 
     def snapshot(self, name: str) -> dict:
         return self._execute(

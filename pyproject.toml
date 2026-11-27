@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "packettracer-evidence-mcp"
-version = "0.1.0"
+version = "0.2.0"
 description = "Control live Packet Tracer labs and capture real, verifiable screenshot evidence over MCP."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
-authors = [{name = "Adam Soman"}]
+authors = [{name = "Adam-ZS"}]
 keywords = ["mcp", "packet-tracer", "networking", "cisco", "screenshots"]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -28,9 +28,9 @@ desktop = ["PyAutoGUI>=0.9.54,<1"]
 pt-evidence = "packettracer_evidence_mcp.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/Adam-ZS/packettracer-evidence-mcp"
-Issues = "https://github.com/Adam-ZS/packettracer-evidence-mcp/issues"
-Documentation = "https://github.com/Adam-ZS/packettracer-evidence-mcp/tree/main/docs"
+Homepage = "https://github.com/Adam-ZS/packet-tracer-mcp"
+Issues = "https://github.com/Adam-ZS/packet-tracer-mcp/issues"
+Documentation = "https://github.com/Adam-ZS/packet-tracer-mcp/tree/main/docs"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/packettracer_evidence_mcp"]

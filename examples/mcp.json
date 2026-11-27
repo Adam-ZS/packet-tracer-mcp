@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "packettracer-evidence": {
-      "command": "/absolute/path/packettracer-evidence-mcp/.venv/bin/pt-evidence",
+      "command": "/absolute/path/packet-tracer-mcp/.venv/bin/pt-evidence",
       "args": ["serve"],
       "env": {
         "PT_WORKSPACE": "/absolute/path/my-packet-tracer-work"

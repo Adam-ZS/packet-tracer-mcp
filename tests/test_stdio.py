@@ -30,8 +30,8 @@ async def test_real_stdio_handshake_tools_and_offline_error_recovery(tmp_path):
         await session.initialize()
         listed = await session.list_tools()
         names = {tool.name for tool in listed.tools}
-        assert len(names) == 21
-        assert {"pt_terminal", "pt_capture", "pt_fill_report"} <= names
+        assert len(names) == 22
+        assert {"pt_build_practice_lan", "pt_terminal", "pt_capture", "pt_fill_report"} <= names
         assert "pt_desktop_action" not in names
         status = await session.call_tool("pt_status", {})
         assert status.structuredContent["extension_alive"] is False

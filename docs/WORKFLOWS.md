@@ -15,10 +15,14 @@
    topology, with a short descriptive label near each image in the report.
 7. Save with `pt_save_project`. Reopen the saved project and check its devices.
 
-The runnable [demo](../examples/build_demo.py) performs the build through an
-actual MCP stdio session. It requires an explicit `--discard-current` flag
-because it starts a new Packet Tracer project. It never creates screenshot
-evidence from text. Open the relevant device window before taking a screenshot.
+For a guided first run, the [demo script](../examples/build_demo.py) calls
+`pt_build_practice_lan` over MCP stdio. That tool adds a server to the LAN,
+configures all three IPv4 addresses, tests both pings from the PC and saves
+on success. The script's `--discard-current` flag starts a blank project.
+For exact tool arguments to build a custom network, see the
+[AI guide](AI_GUIDE.md).
+
+Open the relevant device window before taking a screenshot.
 
 ## Local SSH and AAA
 
