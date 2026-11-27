@@ -14,16 +14,32 @@
 <p align="center">
   <a href="https://github.com/Adam-ZS/packet-tracer-mcp/releases/latest"><strong>Download latest release</strong></a> ·
   <a href="#quick-start">Quick start</a> ·
-  <a href="#build-your-first-lan">Try a LAN</a> ·
+  <a href="#live-showcase">Live showcase</a> ·
   <a href="docs/AI_GUIDE.md">AI tool guide</a> ·
-  <a href="docs/HEADLESS.md">Headless Linux</a> ·
-  <a href="docs/TROUBLESHOOTING.md">Troubleshooting</a>
+  <a href="docs/HEADLESS.md">Headless Linux</a>
 </p>
 
-Let an MCP client build and configure networks in your running Cisco Packet Tracer.
-It can place routers, switches, PCs and servers, connect their actual ports, run
-IOS commands and save a `.pkt`. It can also capture genuine screenshots and
-insert them into a Word template.
+Let your MCP client place routers, switches, PCs and servers in Cisco Packet
+Tracer. It can cable the devices, configure IOS and IPv4, test connectivity
+from a simulated PC and save the verified `.pkt`. When you need a report, it
+can capture the live simulator and insert those screenshots into a Word template.
+
+## Live showcase
+
+![The real four-device practice LAN in Packet Tracer, with a command prompt showing four server ping replies and zero packet loss](docs/assets/showcase.png)
+
+The PC in this run reached both the router and server with four replies and
+zero packet loss. [Full-size topology](docs/assets/demo-topology.png) ·
+[Ping capture](docs/assets/demo-ping.png) · [Test details](docs/VALIDATION.md)
+
+<details>
+<summary><strong>Watch Packet Tracer build the LAN</strong></summary>
+
+![Live recording of the Packet Tracer canvas as the demo places four devices, adds three cables and labels their addresses](docs/assets/live-build.gif)
+
+Recorded from the live Linux/Xvfb simulator while `pt-evidence demo` ran.
+
+</details>
 
 ## Build your first LAN
 
@@ -32,15 +48,8 @@ Open a blank Packet Tracer project after [setup](#quick-start) and tell your MCP
 > Call `pt_build_practice_lan` and save the result as `practice-lan.pkt`.
 > Report the actual ping results from the PC to the router and server.
 
-The tool places four devices, cables the three Ethernet links, configures
-`192.0.2.0/24`, and checks both pings before saving. Use the
-[AI tool guide](docs/AI_GUIDE.md) to build a custom layout.
-
-![A router, switch, PC and server connected by three live Packet Tracer cables](docs/assets/demo-topology.png)
-
-The PC reached both the router and server with four replies and zero packet
-loss. [See the server ping capture](docs/assets/demo-ping.png) and
-[validation record](docs/VALIDATION.md).
+The starter LAN uses `192.0.2.0/24` and saves after both pings pass. For a
+custom layout, see the [AI tool guide](docs/AI_GUIDE.md).
 
 ## Quick start
 

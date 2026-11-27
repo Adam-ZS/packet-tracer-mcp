@@ -1,46 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
-  <title id="title">Packet Tracer MCP</title>
-  <desc id="desc">Original illustration of a connected lab network. Control, verify, capture and save.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="320" viewBox="0 0 1120 320">
+  <title>Packet Tracer MCP</title>
   <defs>
-    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#071426"/><stop offset="1" stop-color="#122d47"/></linearGradient>
-    <linearGradient id="accent"><stop stop-color="#4ce3bd"/><stop offset="1" stop-color="#78bdff"/></linearGradient>
-    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M 28 0 L 0 0 0 28" fill="none" stroke="#71c3ee" stroke-opacity=".075"/></pattern>
-    <filter id="glow"><feGaussianBlur stdDeviation="18"/></filter>
+    <linearGradient id="background" x2="1" y2="1">
+      <stop stop-color="#081426"/>
+      <stop offset="1" stop-color="#0b2b40"/>
+    </linearGradient>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#72c7dd" stroke-opacity=".12"/>
+    </pattern>
+    <linearGradient id="edge">
+      <stop stop-color="#315c72"/>
+      <stop offset="1" stop-color="#69f2ce"/>
+    </linearGradient>
   </defs>
-  <rect width="1200" height="430" rx="24" fill="url(#bg)"/>
-  <rect width="1200" height="430" rx="24" fill="url(#grid)"/>
-  <circle cx="1010" cy="180" r="120" fill="#37d2b8" opacity=".09" filter="url(#glow)"/>
-  <path d="M56 50h24" stroke="#4ce3bd" stroke-width="4" stroke-linecap="round"/>
-  <text x="94" y="55" fill="#93b4cc" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="3">RUNS ON YOUR MACHINE</text>
-  <text x="54" y="148" fill="#f4f9ff" font-family="Arial, sans-serif" font-size="72" font-weight="700" letter-spacing="-2">Packet Tracer</text>
-  <text x="54" y="228" fill="url(#accent)" font-family="Arial, sans-serif" font-size="72" font-weight="700" letter-spacing="-2">MCP</text>
-  <text x="58" y="274" fill="#b3c9dc" font-family="Arial, sans-serif" font-size="20">Build networks, verify connectivity, and capture the live app.</text>
-  <g font-family="Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1.5">
-    <rect x="58" y="322" width="112" height="36" rx="18" fill="#173f48"/><text x="77" y="345" fill="#6bf0ce">CONTROL</text>
-    <rect x="180" y="322" width="102" height="36" rx="18" fill="#173749"/><text x="201" y="345" fill="#89ceff">VERIFY</text>
-    <rect x="292" y="322" width="112" height="36" rx="18" fill="#2c3742"/><text x="311" y="345" fill="#ffda8c">CAPTURE</text>
-    <rect x="414" y="322" width="88" height="36" rx="18" fill="#29374d"/><text x="438" y="345" fill="#b7beff">SAVE</text>
+  <rect width="1120" height="320" rx="24" fill="url(#background)"/>
+  <rect x="628" width="492" height="320" rx="24" fill="url(#grid)"/>
+  <path d="M0 301h1120" stroke="#72c7dd" stroke-opacity=".17"/>
+  <g font-family="DejaVu Sans, Arial, sans-serif">
+    <text x="57" y="81" font-size="14" font-weight="700" letter-spacing="3" fill="#78e6cc">CISCO PACKET TRACER AUTOMATION</text>
+    <text x="53" y="155" font-size="62" font-weight="700" fill="#f2f8fd">Packet Tracer</text>
+    <text x="53" y="220" font-size="62" font-weight="700" fill="#76edcd">MCP</text>
+    <text x="57" y="269" font-size="19" fill="#bfd2e4">Build and verify networks from your MCP client.</text>
   </g>
-  <g stroke="#38647d" stroke-width="2" fill="none">
-    <path d="M836 104L1002 150L1086 292M836 104L812 282L1002 150M812 282L1086 292"/>
-    <path d="M812 282L911 355M1086 292L911 355" stroke-dasharray="5 6"/>
+  <g fill="none" stroke="url(#edge)" stroke-width="2">
+    <path d="M726 159h66l30-30h34M856 129h38l33-53h59M856 129h38l33 89h59"/>
+    <path d="M726 179h84l25-20h21M856 153h25l38 85h67" stroke-opacity=".32"/>
   </g>
-  <g fill="#4ce3bd"><circle cx="911" cy="125" r="4"/><circle cx="824" cy="191" r="4"/><circle cx="909" cy="215" r="4"/><circle cx="1044" cy="221" r="4"/><circle cx="952" cy="287" r="4"/></g>
-  <g font-family="Arial, sans-serif" text-anchor="middle">
-    <circle cx="836" cy="104" r="34" fill="#13374a" stroke="#4ce3bd" stroke-width="2"/>
-    <path d="M820 103h31m-5-6 6 6-6 6M851 114h-31m5-6-6 6 6 6" fill="none" stroke="#a0f3df" stroke-width="2"/>
-    <text x="836" y="159" font-size="12" fill="#aac4d8">ROUTER</text>
-    <rect x="966" y="122" width="72" height="56" rx="12" fill="#15384f" stroke="#78bdff" stroke-width="2"/>
-    <path d="M981 144h42m-42 12h42" stroke="#95d3ff" stroke-width="2"/>
-    <g fill="#95d3ff"><circle cx="986" cy="164" r="2"/><circle cx="995" cy="164" r="2"/><circle cx="1004" cy="164" r="2"/></g>
-    <text x="1002" y="199" font-size="12" fill="#aac4d8">SWITCH</text>
-    <rect x="782" y="257" width="60" height="44" rx="7" fill="#13374a" stroke="#4ce3bd" stroke-width="2"/>
-    <path d="M812 302v8m-15 0h30" stroke="#a0f3df" stroke-width="2"/>
-    <text x="812" y="332" font-size="12" fill="#aac4d8">CLIENT</text>
-    <rect x="1063" y="260" width="46" height="61" rx="8" fill="#20394c" stroke="#ffda8c" stroke-width="2"/>
-    <path d="M1074 274h24m-24 12h24m-24 12h17" stroke="#ffda8c" stroke-width="2"/>
-    <text x="1086" y="344" font-size="12" fill="#aac4d8">AAA</text>
-    <circle cx="911" cy="355" r="16" fill="#4ce3bd"/><path d="m904 355 5 5 9-11" fill="none" stroke="#092133" stroke-width="3"/>
+  <g fill="#76edcd">
+    <circle cx="787" cy="159" r="4"/>
+    <circle cx="927" cy="76" r="4"/>
+    <circle cx="927" cy="218" r="4"/>
   </g>
-  <text x="58" y="400" fill="#60859e" font-family="Arial, sans-serif" font-size="11" letter-spacing="1.5">OPEN SOURCE  /  MCP  /  REAL DESKTOP CAPTURE</text>
+  <g fill="#102a3c" stroke="#67dfc8" stroke-width="2">
+    <rect x="658" y="135" width="70" height="53" rx="13"/>
+    <rect x="854" y="106" width="76" height="47" rx="11"/>
+    <rect x="984" y="55" width="73" height="45" rx="8"/>
+    <rect x="998" y="195" width="45" height="60" rx="8"/>
+  </g>
+  <g stroke="#a4f4e4" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M678 155h28l-5-5m5 5-5 5m7 8h-28l5-5m-5 5 5 5"/>
+    <path d="M868 121h48m-48 13h48m-42 5v3m11-3v3m11-3v3m11-3v3"/>
+    <path d="M1020 100v9m-13 0h26m-24 99h22m-22 13h22m-22 13h16"/>
+  </g>
 </svg>
