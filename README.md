@@ -15,7 +15,7 @@
   <a href="https://github.com/Adam-ZS/packet-tracer-mcp/releases/latest"><strong>Download latest release</strong></a> ·
   <a href="#quick-start">Quick start</a> ·
   <a href="#live-showcase">Live showcase</a> ·
-  <a href="docs/AI_GUIDE.md">AI tool guide</a> ·
+  <a href="docs/AI_GUIDE.md">AI tool guide.</a> ·
   <a href="docs/HEADLESS.md">Headless Linux</a>
 </p>
 
